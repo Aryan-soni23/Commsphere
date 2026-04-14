@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.cometchat.javasampleapp'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.cometchat.javasampleapp"
+        minSdk 21
+        targetSdk 34
+        versionCode 11
+        versionName "4.3.11"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [file_provider: "com.cometchat.javasampleapp"]
+    }
+    packaging {
+        jniLibs {
+            // This is the essential fix for 16KB alignment
+            useLegacyPackaging = false
+        }
+    }
+    buildTypes {
+        debug {
+            debuggable false
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    // Your other dependencies like appcompat, material, etc.
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.cometchat:chat-uikit-android:4.+'
+    implementation 'com.cometchat:calls-sdk-android:4.0.2'
+
+    // Add this block to enforce the Kotlin version
+    constraints {
+        implementation('org.jetbrains.kotlin:kotlin-stdlib:1.8.10') {
+            because 'ensuring consistent Kotlin standard library version'
+        }
+        implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10') {
+            because 'ensuring consistent Kotlin standard library version'
+        }
+        implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10') {
+            because 'ensuring consistent Kotlin standard library version'
+        }
+    }
+    // Add these missing test dependencies
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:core:1.5.0'
+}
